@@ -2,7 +2,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-
+      
       <ion-back-button></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
@@ -20,14 +20,24 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button id="open-add-expanse-modal" expand="block">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+  <ion-modal trigger="open-add-expanse-modal" [presentingElement]="presentingElement">
+    <ng-template>
+      <app-add-expanse-modal (triggerClose)="cancel()" (triggerConfirm)="confirm()"></app-add-expanse-modal>
+    </ng-template>
+  </ion-modal>
+
   <ion-list [inset]="true">
     <ion-item>
       <ion-icon aria-hidden="true" name="cash-outline" slot="start"></ion-icon>
-      <ion-label>Ausgaben</ion-label>
+      <ion-label>Ausgaben ({{ groupsService.getGroupSum() | currency }})</ion-label>
     </ion-item>
-
-
-
     <ion-item>
       <ion-icon slot="start" name="stats-chart-outline"></ion-icon>
       <ion-label>Statistik</ion-label>
@@ -36,7 +46,6 @@
       <ion-icon slot="start" name="code-outline"></ion-icon>
       <ion-label>Ausgleichen</ion-label>
     </ion-item>
-    
   </ion-list>
 
 </ion-content>

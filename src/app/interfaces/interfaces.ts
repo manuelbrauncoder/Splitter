@@ -13,7 +13,7 @@ export interface Expanse {
     description: string,
     amount: number,
     category: string,
-    participants: string[]
+    paidBy: string
 }
 
 export interface User {

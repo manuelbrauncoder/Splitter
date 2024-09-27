@@ -23,6 +23,15 @@ export class GroupsService {
   public groups: Group[] = [];
   public group: Group | null = null;
 
+  getGroupSum(){
+    let sum = 0;
+    if (this.group?.expanses) {
+      for (const expanse of this.group.expanses) {
+        sum += expanse.amount;
+      }
+    }
+    return sum;
+  }
 
   getGroupsList() {
     const q = query(this.collRef, orderBy('title'));
@@ -40,7 +49,6 @@ export class GroupsService {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log('Document data:', docSnap.data());
       this.group = this.setGroupObject(docSnap.data())
     } else {
       console.log('No such document!');

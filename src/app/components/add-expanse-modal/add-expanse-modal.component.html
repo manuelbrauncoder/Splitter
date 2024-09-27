@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="triggerCloseInParent()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Create Group</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="triggerConfirmInParent()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <form>
+    <ion-item>
+      <ion-input
+        label="Enter Title"
+        labelPlacement="stacked"
+        type="text"
+        placeholder="Title"
+        [(ngModel)]="expanse.title"
+        name="title"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        label="Enter Description"
+        labelPlacement="stacked"
+        type="text"
+        placeholder="Description"
+        [(ngModel)]="expanse.description"
+        name="description"
+      ></ion-input>
+      <ion-item>
+        <ion-input
+          label="Enter Amount"
+          labelPlacement="stacked"
+          type="number"
+          placeholder="Amount"
+          [(ngModel)]="expanse.amount"
+          name="amount"
+        ></ion-input>
+      </ion-item>
+    </ion-item>
+    <ion-item>
+      
+        <ion-select [(ngModel)]="expanse.paidBy" name="users" aria-label="users" interface="popover" [multiple]="false" placeholder="Select Payer">
+          @for (user of groupsService.group?.users; track $index) {
+            <ion-select-option value="{{ user }}">{{ user }}</ion-select-option>
+          }
+        </ion-select>
+      
+    </ion-item>
+    <ion-item>
+      <ion-select [(ngModel)]="expanse.category" name="category" aria-label="category" interface="popover" [multiple]="false" placeholder="Select category">
+        @for (category of groupsService.group?.categories; track $index) {
+          <ion-select-option value="{{ category }}">{{ category }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+  </form>
+  
+</ion-content>

@@ -10,13 +10,13 @@
   </ion-header>
 
   <ion-fab vertical="bottom" horizontal="end">
-    <ion-fab-button id="open-modal" expand="block">
+    <ion-fab-button id="open-add-group-modal" expand="block">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
 
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" [presentingElement]="presentingElement">
+  <ion-modal trigger="open-add-group-modal" (willDismiss)="onWillDismiss($event)" [presentingElement]="presentingElement">
     <ng-template>
       <app-add-group-modal (triggerClose)="cancel()" (triggerConfirm)="confirm()"></app-add-group-modal>
     </ng-template>
