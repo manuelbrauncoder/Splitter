@@ -1,3 +1,37 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Splitter App</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-menu-toggle routerLink="home">home</ion-menu-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-menu-toggle routerLink="profile">Profile</ion-menu-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-menu-toggle routerLink="about">About</ion-menu-toggle>
+        </ion-item>
+        
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Splitter</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-router-outlet></ion-router-outlet>
+    </ion-content>
+  </div>
+
 </ion-app>
