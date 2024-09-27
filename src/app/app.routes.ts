@@ -13,7 +13,10 @@ export const routes: Routes = [
     path: 'about',
     loadComponent: () => import('./pages/about/about.component').then((m) => m.AboutComponent),
   },
-  
+  {
+    path: 'group-details/:id',
+    loadComponent: () => import('./pages/group-details/group-details.component').then((m) => m.GroupDetailsComponent)
+  },
   {
     path: '',
     redirectTo: 'home',

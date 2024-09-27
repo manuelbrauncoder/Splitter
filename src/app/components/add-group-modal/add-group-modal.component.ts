@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonHeader,
@@ -10,9 +10,10 @@ import {
   IonButton,
   IonTitle,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
 } from '@ionic/angular/standalone';
 import { Group } from 'src/app/interfaces/interfaces';
+import { GroupsService } from 'src/app/services/groups.service';
 
 @Component({
   selector: 'app-add-group-modal',
@@ -30,10 +31,12 @@ import { Group } from 'src/app/interfaces/interfaces';
     IonHeader,
     FormsModule,
     IonSelect,
-    IonSelectOption
+    IonSelectOption,
   ],
 })
 export class AddGroupModalComponent {
+  groupService = inject(GroupsService);
+
   group: Group = {
     id: '',
     title: '',
@@ -52,12 +55,13 @@ export class AddGroupModalComponent {
   constructor() {}
 
   triggerCloseInParent() {
-    
     this.triggerClose.emit();
   }
-  triggerConfirmInParent() {
+
+  async triggerConfirmInParent() {
+    this.group.id = this.groupService.getUuidv4();
+    await this.groupService.saveGroup(this.group);
     console.log(this.group);
-    
     this.triggerConfirm.emit();
   }
 }

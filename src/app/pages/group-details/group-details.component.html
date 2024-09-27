@@ -1,0 +1,23 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="mb-auto">
+    <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+    <ion-card-header>
+      <ion-card-title>{{ groupsService.group?.title }}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{ groupsService.group?.description }}
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
@@ -14,17 +14,18 @@ import {
   IonModal,
   IonButtons,
   IonItem,
-  IonInput,
-} from '@ionic/angular/standalone';
+  IonInput, IonLabel, IonList } from '@ionic/angular/standalone';
 import { Group } from 'src/app/interfaces/interfaces';
 import { AddGroupModalComponent } from 'src/app/components/add-group-modal/add-group-modal.component';
+import { GroupsService } from 'src/app/services/groups.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonList, IonLabel, 
     CommonModule,
     FormsModule,
     IonInput,
@@ -39,12 +40,14 @@ import { AddGroupModalComponent } from 'src/app/components/add-group-modal/add-g
     IonTitle,
     IonContent,
     IonFabButton,
-    AddGroupModalComponent
+    AddGroupModalComponent,
+    RouterModule
   ],
 })
 export class HomePage implements OnInit {
   name = '';
   @ViewChild(IonModal) modal!: IonModal;
+  public groupsService = inject(GroupsService);
 
   presentingElement: any = null;
   
