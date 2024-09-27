@@ -44,7 +44,6 @@ export class HomePage {
   name = '';
   @ViewChild(IonModal) modal!: IonModal;
 
-  message = '';
 
   group: Group = {
     id: '',
@@ -68,7 +67,8 @@ export class HomePage {
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
-      this.message = `Hello, ${ev.detail.data}!`;
+      console.log(this.group);
+      
     }
   }
 }
