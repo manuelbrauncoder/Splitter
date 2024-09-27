@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons';
+import { add, airplane, cashOutline, codeOutline, statsChartOutline } from 'ionicons/icons';
 import {
   IonApp,
   IonMenuToggle,
@@ -53,7 +53,8 @@ export class AppComponent implements OnDestroy {
 
 
   constructor() {
-    addIcons({ add });
+    addIcons({ add, airplane, cashOutline, statsChartOutline, codeOutline });
+
     this.unsubGroupsList = this.groupsService.getGroupsList();
   }
 

@@ -14,7 +14,13 @@ import {
   IonModal,
   IonButtons,
   IonItem,
-  IonInput, IonLabel, IonList } from '@ionic/angular/standalone';
+  IonInput,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonMenu,
+  IonRouterLink
+} from '@ionic/angular/standalone';
 import { Group } from 'src/app/interfaces/interfaces';
 import { AddGroupModalComponent } from 'src/app/components/add-group-modal/add-group-modal.component';
 import { GroupsService } from 'src/app/services/groups.service';
@@ -25,7 +31,9 @@ import { RouterModule } from '@angular/router';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonList, IonLabel, 
+  imports: [
+    IonList,
+    IonLabel,
     CommonModule,
     FormsModule,
     IonInput,
@@ -41,7 +49,10 @@ import { RouterModule } from '@angular/router';
     IonContent,
     IonFabButton,
     AddGroupModalComponent,
-    RouterModule
+    RouterModule,
+    IonMenuButton,
+    IonMenu,
+    IonRouterLink
   ],
 })
 export class HomePage implements OnInit {
@@ -50,7 +61,6 @@ export class HomePage implements OnInit {
   public groupsService = inject(GroupsService);
 
   presentingElement: any = null;
-  
 
   constructor() {}
 
@@ -69,7 +79,6 @@ export class HomePage implements OnInit {
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
-      
     }
   }
 }

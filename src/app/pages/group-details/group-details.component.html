@@ -19,5 +19,25 @@
       {{ groupsService.group?.description }}
     </ion-card-content>
   </ion-card>
+
+  <ion-list [inset]="true">
+    <ion-item>
+      <ion-icon aria-hidden="true" name="cash-outline" slot="start"></ion-icon>
+      <ion-label>Ausgaben</ion-label>
+    </ion-item>
+
+
+
+    <ion-item>
+      <ion-icon slot="start" name="stats-chart-outline"></ion-icon>
+      <ion-label>Statistik</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="code-outline"></ion-icon>
+      <ion-label>Ausgleichen</ion-label>
+    </ion-item>
+    
+  </ion-list>
+
 </ion-content>
 
