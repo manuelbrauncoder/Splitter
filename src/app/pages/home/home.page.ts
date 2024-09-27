@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
@@ -17,6 +17,7 @@ import {
   IonInput,
 } from '@ionic/angular/standalone';
 import { Group } from 'src/app/interfaces/interfaces';
+import { AddGroupModalComponent } from 'src/app/components/add-group-modal/add-group-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -38,23 +39,21 @@ import { Group } from 'src/app/interfaces/interfaces';
     IonTitle,
     IonContent,
     IonFabButton,
+    AddGroupModalComponent
   ],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   name = '';
   @ViewChild(IonModal) modal!: IonModal;
 
-
-  group: Group = {
-    id: '',
-    title: '',
-    description: '',
-    users: [],
-    expanses: [],
-    categories: []
-  }
+  presentingElement: any = null;
+  
 
   constructor() {}
+
+  ngOnInit() {
+    this.presentingElement = document.querySelector('.ion-page');
+  }
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
@@ -67,7 +66,6 @@ export class HomePage {
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
-      console.log(this.group);
       
     }
   }

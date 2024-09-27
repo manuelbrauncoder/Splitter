@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
@@ -20,6 +20,7 @@ import {
   IonItem,
   IonButton,
 } from '@ionic/angular/standalone';
+import { GroupsService } from './services/groups.service';
 
 @Component({
   selector: 'app-root',
@@ -45,8 +46,18 @@ import {
     IonMenuButton,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
+  groupsService = inject(GroupsService);
+
+  unsubGroupsList;
+
+
   constructor() {
     addIcons({ add });
+    this.unsubGroupsList = this.groupsService.getGroupsList();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubGroupsList();
   }
 }
