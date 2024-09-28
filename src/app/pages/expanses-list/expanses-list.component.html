@@ -24,7 +24,7 @@
   <ion-list [inset]="true">
     @for (expanse of groupsService.group?.expanses; track $index; let i = $index) {
       <ion-item button [routerLink]="['/expanse-details', groupId, i]" slot="start">
-        <ion-label>{{ expanse.amount | currency }} {{ expanse.title }}</ion-label>
+        <ion-label>{{ expanse.amount | currency }} {{ expanse.title }} Paid by: {{ expanse.paidBy }}</ion-label>
       </ion-item>
     }
   </ion-list>

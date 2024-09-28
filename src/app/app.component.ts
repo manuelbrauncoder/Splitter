@@ -20,6 +20,7 @@ import {
   IonItem,
   IonButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { GroupsService } from './services/groups.service';
+import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -47,17 +48,20 @@ import { GroupsService } from './services/groups.service';
 })
 export class AppComponent implements OnDestroy {
   groupsService = inject(GroupsService);
+  usersService = inject(UsersService);
 
   unsubGroupsList;
+  unsubUsersList;
 
 
   constructor() {
     addIcons({homeOutline,add,airplane,cashOutline,statsChartOutline,codeOutline, trashOutline});
-
+    this.unsubUsersList = this.usersService.getUsersList();
     this.unsubGroupsList = this.groupsService.getGroupsList();
   }
 
   ngOnDestroy(): void {
     this.unsubGroupsList();
+    this.unsubUsersList();
   }
 }

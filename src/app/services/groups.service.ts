@@ -80,12 +80,12 @@ export class GroupsService {
 
   setGroupObject(group: any): Group {
     return {
-      id: group.id,
-      title: group.title,
-      description: group.description,
-      users: group.users,
-      expanses: group.expanses,
-      categories: group.categories,
+      id: group.id || '',
+      title: group.title || '',
+      description: group.description || '',
+      users: group.users || [],
+      expanses: group.expanses || [],
+      categories: group.categories || [],
     };
   }
 
