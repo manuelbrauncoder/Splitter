@@ -3,15 +3,15 @@
     <ion-buttons slot="start">
       <ion-button (click)="triggerCloseInParent()">Cancel</ion-button>
     </ion-buttons>
-    <ion-title>Create Group</ion-title>
+    <ion-title>Add Expanse</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="triggerConfirmInParent()" [strong]="true">Confirm</ion-button>
+      <ion-button [disabled]="!expanseForm.valid" type="submit" form="expanseForm" (click)="triggerConfirmInParent(expanseForm)" [strong]="true">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" [fullscreen]="true">
-  <form>
+<ion-content [scrollY]="false" class="ion-padding" [fullscreen]="true">
+  <form id="expanseForm" name="expanseForm" #expanseForm="ngForm">
     <ion-item>
       <ion-input
         label="Enter Title"
@@ -19,6 +19,8 @@
         type="text"
         placeholder="Title"
         [(ngModel)]="expanse.title"
+        required
+        #expanseTitle="ngModel"
         name="title"
       ></ion-input>
     </ion-item>
@@ -29,6 +31,7 @@
         type="text"
         placeholder="Description"
         [(ngModel)]="expanse.description"
+        #expanseDescriptin="ngModel"
         name="description"
       ></ion-input>
       <ion-item>
@@ -38,13 +41,15 @@
           type="number"
           placeholder="Amount"
           [(ngModel)]="expanse.amount"
+          #expanseAmount="ngModel"
+          required
           name="amount"
         ></ion-input>
       </ion-item>
     </ion-item>
     <ion-item>
       
-        <ion-select [(ngModel)]="expanse.paidBy" name="users" aria-label="users" interface="popover" [multiple]="false" placeholder="Select Payer">
+        <ion-select [(ngModel)]="expanse.paidBy" #expansePaidBy="ngModel" required name="users" aria-label="users" interface="popover" [multiple]="false" placeholder="Select Payer">
           @for (user of groupsService.group?.users; track $index) {
             <ion-select-option value="{{ user }}">{{ user }}</ion-select-option>
           }
@@ -52,7 +57,7 @@
       
     </ion-item>
     <ion-item>
-      <ion-select [(ngModel)]="expanse.category" name="category" aria-label="category" interface="popover" [multiple]="false" placeholder="Select category">
+      <ion-select [(ngModel)]="expanse.category" #expanseCategory="ngModel" required name="category" aria-label="category" interface="popover" [multiple]="false" placeholder="Select category">
         @for (category of groupsService.group?.categories; track $index) {
           <ion-select-option value="{{ category }}">{{ category }}</ion-select-option>
         }

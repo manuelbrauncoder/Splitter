@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Group } from 'src/app/interfaces/interfaces';
 import { GroupsService } from 'src/app/services/groups.service';
 import {
@@ -22,6 +22,7 @@ import {
   IonFab,
   IonFabButton,
   IonModal,
+  IonRouterLink
 } from '@ionic/angular/standalone';
 import { AddExpanseModalComponent } from 'src/app/components/add-expanse-modal/add-expanse-modal.component';
 import { CurrencyPipe } from '@angular/common';
@@ -52,7 +53,9 @@ import { CurrencyPipe } from '@angular/common';
     IonToolbar,
     IonHeader,
     AddExpanseModalComponent,
-    CurrencyPipe
+    CurrencyPipe,
+    IonRouterLink,
+    RouterModule
   ],
 })
 export class GroupDetailsComponent implements OnInit {
@@ -61,6 +64,7 @@ export class GroupDetailsComponent implements OnInit {
   group: Group | null = null;
   groupId = '';
   component = GroupDetailsComponent;
+
   presentingElement: any = null;
   @ViewChild(IonModal) modal!: IonModal;
   name = '';

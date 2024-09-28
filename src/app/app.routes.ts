@@ -18,6 +18,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/group-details/group-details.component').then((m) => m.GroupDetailsComponent)
   },
   {
+    path: 'expanses-list/:id',
+    loadComponent: () => import('./pages/expanses-list/expanses-list.component').then((m) => m.ExpansesListComponent)
+  },
+  {
+    path: 'expanse-details/:id/:index',
+    loadComponent: () => import('./pages/expanse-details/expanse-details.component').then((m) => m.ExpanseDetailsComponent)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

@@ -1,0 +1,32 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Expanses of {{ groupsService.group?.title }}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Sum: {{ groupsService.getGroupSum() | currency }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list [inset]="true">
+    @for (expanse of groupsService.group?.expanses; track $index; let i = $index) {
+      <ion-item button [routerLink]="['/expanse-details', groupId, i]" slot="start">
+        <ion-label>{{ expanse.amount | currency }} {{ expanse.title }}</ion-label>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>
+

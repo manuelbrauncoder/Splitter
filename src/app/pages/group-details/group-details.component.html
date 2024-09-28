@@ -3,7 +3,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -34,17 +34,17 @@
   </ion-modal>
 
   <ion-list [inset]="true">
-    <ion-item>
+    <ion-item button [routerLink]="['/expanses-list', groupId]">
       <ion-icon aria-hidden="true" name="cash-outline" slot="start"></ion-icon>
-      <ion-label>Ausgaben ({{ groupsService.getGroupSum() | currency }})</ion-label>
+      <ion-label>Expanses ({{ groupsService.getGroupSum() | currency }})</ion-label>
     </ion-item>
     <ion-item>
       <ion-icon slot="start" name="stats-chart-outline"></ion-icon>
-      <ion-label>Statistik</ion-label>
+      <ion-label>Statistics</ion-label>
     </ion-item>
     <ion-item>
       <ion-icon slot="start" name="code-outline"></ion-icon>
-      <ion-label>Ausgleichen</ion-label>
+      <ion-label>Settle</ion-label>
     </ion-item>
   </ion-list>
 

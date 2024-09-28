@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { add, airplane, cashOutline, codeOutline, statsChartOutline } from 'ionicons/icons';
+import { add, airplane, cashOutline, codeOutline, statsChartOutline, homeOutline, trashOutline } from 'ionicons/icons';
 import {
   IonApp,
   IonMenuToggle,
@@ -18,15 +18,14 @@ import {
   IonRouterLink,
   IonList,
   IonItem,
-  IonButton,
-} from '@ionic/angular/standalone';
+  IonButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { GroupsService } from './services/groups.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [
+  imports: [IonLabel, IonIcon, 
     IonMenuToggle,
     IonButton,
     IonItem,
@@ -53,7 +52,7 @@ export class AppComponent implements OnDestroy {
 
 
   constructor() {
-    addIcons({ add, airplane, cashOutline, statsChartOutline, codeOutline });
+    addIcons({homeOutline,add,airplane,cashOutline,statsChartOutline,codeOutline, trashOutline});
 
     this.unsubGroupsList = this.groupsService.getGroupsList();
   }

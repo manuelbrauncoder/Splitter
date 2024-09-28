@@ -5,48 +5,38 @@
     </ion-buttons>
     <ion-title>Create Group</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="triggerConfirmInParent()" [strong]="true">Confirm</ion-button>
+      <ion-button type="submit" [disabled]="!groupForm.valid" form="groupForm" (click)="triggerConfirmInParent(groupForm)" [strong]="true">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding" [fullscreen]="true">
-  <form>
+<ion-content [scrollY]="false" class="ion-padding" [fullscreen]="true">
+  <form id="groupForm" name="groupForm" #groupForm="ngForm">
     <ion-item>
-      <ion-input
-        label="Enter Title"
-        labelPlacement="stacked"
-        type="text"
-        placeholder="Title"
-        [(ngModel)]="group.title"
-        name="title"
-      ></ion-input>
+      <ion-input #title="ngModel" required minlength="4" label="Enter Title" labelPlacement="stacked" type="text"
+        placeholder="Title" [(ngModel)]="group.title" name="title"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input
-        label="Enter Description"
-        labelPlacement="stacked"
-        type="text"
-        placeholder="Description"
-        [(ngModel)]="group.description"
-        name="description"
-      ></ion-input>
+      <ion-input label="Enter Description" labelPlacement="stacked" type="text" placeholder="Description"
+        [(ngModel)]="group.description" #groupDescription="ngModel" name="description"></ion-input>
     </ion-item>
     <ion-item>
-      
-        <ion-select [(ngModel)]="group.users" name="users" aria-label="users" interface="popover" [multiple]="true" placeholder="Select users">
-          @for (user of users; track $index) {
-            <ion-select-option value="{{ user }}">{{ user }}</ion-select-option>
-          }
-        </ion-select>
-      
+
+      <ion-select [(ngModel)]="group.users" #groupUsers="ngModel" required name="users" aria-label="users" interface="popover" [multiple]="true"
+        placeholder="Select users">
+        @for (user of users; track $index) {
+        <ion-select-option value="{{ user }}">{{ user }}</ion-select-option>
+        }
+      </ion-select>
+
     </ion-item>
     <ion-item>
-      <ion-select [(ngModel)]="group.categories" name="categories" aria-label="categories" interface="popover" [multiple]="true" placeholder="Select categories">
+      <ion-select [(ngModel)]="group.categories" #groupCategories="ngModel" required name="categories" aria-label="categories" interface="popover"
+        [multiple]="true" placeholder="Select categories">
         @for (category of categories; track $index) {
-          <ion-select-option value="{{ category }}">{{ category }}</ion-select-option>
+        <ion-select-option value="{{ category }}">{{ category }}</ion-select-option>
         }
       </ion-select>
     </ion-item>
   </form>
-  
+
 </ion-content>

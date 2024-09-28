@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Expanse, Group } from 'src/app/interfaces/interfaces';
 import {
   IonHeader,
@@ -12,7 +19,7 @@ import {
   IonSelect,
   IonSelectOption,
 } from '@ionic/angular/standalone';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { GroupsService } from 'src/app/services/groups.service';
 
 @Component({
@@ -35,12 +42,10 @@ import { GroupsService } from 'src/app/services/groups.service';
   ],
 })
 export class AddExpanseModalComponent implements OnInit {
-
   groupsService = inject(GroupsService);
 
   @Output() triggerClose = new EventEmitter<boolean>();
   @Output() triggerConfirm = new EventEmitter<boolean>();
-  
 
   expanse: Expanse = {
     id: '',
@@ -59,11 +64,13 @@ export class AddExpanseModalComponent implements OnInit {
     this.triggerClose.emit();
   }
 
-  async triggerConfirmInParent() {
-    this.expanse.id = this.groupsService.getUuidv4();
-    console.log(this.expanse);
-    this.groupsService.group?.expanses.push(this.expanse);
-    await this.groupsService.saveGroup(this.groupsService.group!);
-    this.triggerConfirm.emit();
+  async triggerConfirmInParent(ngForm: NgForm) {
+    if (ngForm.valid && ngForm.submitted) {
+      this.expanse.id = this.groupsService.getUuidv4();
+      console.log(this.expanse);
+      this.groupsService.group?.expanses.push(this.expanse);
+      await this.groupsService.saveGroup(this.groupsService.group!);
+      this.triggerConfirm.emit();
+    }
   }
 }

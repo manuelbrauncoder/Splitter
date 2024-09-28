@@ -11,7 +11,6 @@ import {
 } from '@angular/fire/firestore';
 import { Group } from '../interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -47,17 +46,28 @@ export class GroupsService {
   async getGroupData(id: string) {
     const docRef = doc(this.firestore, 'groups', id);
     const docSnap = await getDoc(docRef);
-
     if (docSnap.exists()) {
       this.group = this.setGroupObject(docSnap.data())
     } else {
       console.log('No such document!');
-      
     }
   }
 
   getUuidv4() {
     return uuidv4();
+  }
+
+  getExpanseIndex(id: string){
+    return this.group?.expanses.findIndex(expanse => expanse.id === id);
+  }
+
+  async deleteExpanse(groupId: string, expanseIndex: number) {
+    const groupIndex = this.groups.findIndex(group => group.id === groupId)
+    if (groupIndex !== -1) {
+      this.groups[groupIndex].expanses.splice(expanseIndex, 1);
+      await this.saveGroup(this.groups[groupIndex]);
+      this.group = this.groups[groupIndex];
+    }
   }
 
   async saveGroup(group: Group) {

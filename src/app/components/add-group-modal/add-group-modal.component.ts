@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import {
   IonHeader,
   IonButtons,
@@ -58,10 +58,12 @@ export class AddGroupModalComponent {
     this.triggerClose.emit();
   }
 
-  async triggerConfirmInParent() {
-    this.group.id = this.groupService.getUuidv4();
-    await this.groupService.saveGroup(this.group);
-    console.log(this.group);
-    this.triggerConfirm.emit();
+  async triggerConfirmInParent(ngForm: NgForm) {
+    if (ngForm.valid && ngForm.submitted) {
+      this.group.id = this.groupService.getUuidv4();
+      await this.groupService.saveGroup(this.group);
+      console.log(this.group);
+      this.triggerConfirm.emit();
+    }
   }
 }
