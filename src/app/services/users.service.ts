@@ -36,6 +36,7 @@ export class UsersService {
   setUserObject(user: any): User {
     return {
       id: user.id || '',
+      email: user.email || '',
       name: user.name || '',
       groups: user.groups || [],
       amount: user.amount || [],

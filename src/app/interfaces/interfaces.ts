@@ -18,6 +18,7 @@ export interface Expanse {
 
 export interface User {
     id: string,
+    email: string,
     name: string,
     groups: string[],
     amount: number

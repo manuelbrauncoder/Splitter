@@ -1,3 +1,58 @@
-<p>
-  login works!
-</p>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card class="mb-auto">
+  <ion-card-header>
+    <ion-card-title>Card Title</ion-card-title>
+    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form id="userForm" name="userForm" #userForm="ngForm"> 
+      <ion-item>
+        <ion-input
+          placeholder="enter name..."
+          label="name"
+          labelPlacement="stacked"
+          required
+          name="name"
+          type="text"
+          [(ngModel)]="name"
+          #userName="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          placeholder="enter email..."
+          label="Email"
+          labelPlacement="stacked"
+          required
+          name="email"
+          type="email"
+          [(ngModel)]="email"
+          #userEmail="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          placeholder="enter password..."
+          label="Password"
+          labelPlacement="stacked"
+          required
+          name="password"
+          type="password"
+          [(ngModel)]="password"
+          #userPassword="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-buttons>
+        <ion-button>Login</ion-button>
+        <ion-button>Guest Login</ion-button>
+      </ion-buttons>
+    </form>
+  </ion-card-content>
+</ion-card>
