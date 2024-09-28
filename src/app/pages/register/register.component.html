@@ -1,3 +1,62 @@
-<p>
-  register works!
-</p>
+<ion-card class="mb-auto">
+  <ion-card-header>
+    <ion-card-title>Card Title</ion-card-title>
+    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form id="registerForm" name="registerForm" #registerForm="ngForm">
+      <ion-item>
+        <ion-input
+          label="Name"
+          labelPlacement="stacked"
+          type="text"
+          placeholder="Name..."
+          [(ngModel)]="name"
+          #registerName="ngModel"
+          name="registerName"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          placeholder="enter email..."
+          label="Email"
+          labelPlacement="stacked"
+          required
+          name="userEmail"
+          type="email"
+          [(ngModel)]="email"
+          #userEmail="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          placeholder="enter password..."
+          label="Password"
+          labelPlacement="stacked"
+          required
+          name="userPassword"
+          type="password"
+          [(ngModel)]="password"
+          #userPassword="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          placeholder="confirm password..."
+          label="Confirm Password"
+          labelPlacement="stacked"
+          required
+          name="userPasswordConfirm"
+          type="password"
+          [(ngModel)]="confirmPassword"
+          #userPassword="ngModel"
+        ></ion-input>
+      </ion-item>
+      <ion-buttons>
+        <ion-button type="submit">Sign up</ion-button>
+      </ion-buttons>
+    </form>
+    
+  </ion-card-content>
+</ion-card>

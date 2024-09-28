@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -11,7 +12,6 @@ import {
   IonCardContent,
   IonItem,
   IonInput, IonButtons, IonButton } from '@ionic/angular/standalone';
-import { User } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-login',
@@ -29,12 +29,12 @@ import { User } from 'src/app/interfaces/interfaces';
     IonTitle,
     IonToolbar,
     IonHeader,
-    FormsModule
+    FormsModule, 
+    CommonModule
   ],
 })
 export class LoginComponent implements OnInit {
   
-  name ='';
   email = '';
   password = '';
 
