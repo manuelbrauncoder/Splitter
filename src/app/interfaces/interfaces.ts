@@ -23,3 +23,10 @@ export interface User {
     groups: string[],
     amount: number
 }
+
+export interface AuthUser {
+    name?: string,
+    email: string,
+    password: string,
+    confirmPassword?: string
+}

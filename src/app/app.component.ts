@@ -21,6 +21,8 @@ import {
   IonButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { GroupsService } from './services/groups.service';
 import { UsersService } from './services/users.service';
+import { Auth, User, user } from '@angular/fire/auth';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -50,18 +52,30 @@ export class AppComponent implements OnDestroy {
   groupsService = inject(GroupsService);
   usersService = inject(UsersService);
 
+  private auth: Auth = inject(Auth);
+  user$ = user(this.auth);
+  userSubscription?: Subscription;
+
   unsubGroupsList;
   unsubUsersList;
-
 
   constructor() {
     addIcons({homeOutline,add,airplane,cashOutline,statsChartOutline,codeOutline, trashOutline});
     this.unsubUsersList = this.usersService.getUsersList();
     this.unsubGroupsList = this.groupsService.getGroupsList();
+    this.userSubscription = this.user$.subscribe((authUser: User | null) => {
+      if (authUser === null) {
+        console.log('no user logged in');
+      } else {
+        console.log('User:', authUser);
+      }
+      
+    })
   }
 
   ngOnDestroy(): void {
     this.unsubGroupsList();
     this.unsubUsersList();
+    this.userSubscription?.unsubscribe();
   }
 }

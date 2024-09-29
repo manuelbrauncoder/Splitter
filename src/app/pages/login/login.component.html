@@ -5,14 +5,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-card class="mb-auto">
-  <ion-card-header>
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-  </ion-card-header>
-
-  <ion-card-content>
-    <form id="loginForm" name="loginForm" #loginForm="ngForm"> 
+<ion-content class="ion-padding">
+  <div class="flex-box">
+    <form id="loginForm" name="loginForm" #loginForm="ngForm" (ngSubmit)="login()"> 
       
       <ion-item>
         <ion-input
@@ -22,7 +17,7 @@
           required
           name="email"
           type="email"
-          [(ngModel)]="email"
+          [(ngModel)]="user.email"
           #userEmail="ngModel"
         ></ion-input>
       </ion-item>
@@ -34,14 +29,22 @@
           required
           name="password"
           type="password"
-          [(ngModel)]="password"
+          [(ngModel)]="user.password"
           #userPassword="ngModel"
         ></ion-input>
       </ion-item>
-      <ion-buttons>
+      <ion-buttons class="btns">
         <ion-button type="submit">Login</ion-button>
-        <ion-button>Guest Login</ion-button>
+        <ion-button (click)="guestLogin()">Guest Login</ion-button>
       </ion-buttons>
     </form>
-  </ion-card-content>
-</ion-card>
+    <div class="sign-up">
+      <h4>Not a Splitter user?</h4>
+      <ion-button class="sign-up-btn" routerLink="/register">Sign up</ion-button>
+    </div>
+  </div>
+  
+
+</ion-content>
+   
+

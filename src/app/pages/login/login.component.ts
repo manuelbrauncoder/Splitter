@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
   IonHeader,
+  IonRouterLink,
   IonToolbar,
   IonTitle,
   IonCard,
@@ -11,14 +13,23 @@ import {
   IonCardSubtitle,
   IonCardContent,
   IonItem,
-  IonInput, IonButtons, IonButton } from '@ionic/angular/standalone';
+  IonInput,
+  IonButtons,
+  IonButton,
+  IonContent,
+} from '@ionic/angular/standalone';
+import { AuthUser } from 'src/app/interfaces/interfaces';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [IonButton, IonButtons, 
+  imports: [
+    IonContent,
+    IonButton,
+    IonButtons,
     IonInput,
     IonItem,
     IonCardContent,
@@ -29,16 +40,29 @@ import {
     IonTitle,
     IonToolbar,
     IonHeader,
-    FormsModule, 
-    CommonModule
+    FormsModule,
+    CommonModule,
+    IonRouterLink,
+    RouterLink
   ],
 })
 export class LoginComponent implements OnInit {
+  private usersService = inject(UsersService);
   
-  email = '';
-  password = '';
+  user: AuthUser = {
+    email: '',
+    password: ''
+  }
 
   constructor() {}
+
+  login(){
+    this.usersService.login(this.user);
+  }
+
+  guestLogin(){
+    
+  }
 
   ngOnInit() {}
 }

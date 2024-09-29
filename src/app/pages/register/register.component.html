@@ -1,62 +1,35 @@
-<ion-card class="mb-auto">
-  <ion-card-header>
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-  </ion-card-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign up</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-card-content>
-    <form id="registerForm" name="registerForm" #registerForm="ngForm">
-      <ion-item>
-        <ion-input
-          label="Name"
-          labelPlacement="stacked"
-          type="text"
-          placeholder="Name..."
-          [(ngModel)]="name"
-          #registerName="ngModel"
-          name="registerName"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          placeholder="enter email..."
-          label="Email"
-          labelPlacement="stacked"
-          required
-          name="userEmail"
-          type="email"
-          [(ngModel)]="email"
-          #userEmail="ngModel"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          placeholder="enter password..."
-          label="Password"
-          labelPlacement="stacked"
-          required
-          name="userPassword"
-          type="password"
-          [(ngModel)]="password"
-          #userPassword="ngModel"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          placeholder="confirm password..."
-          label="Confirm Password"
-          labelPlacement="stacked"
-          required
-          name="userPasswordConfirm"
-          type="password"
-          [(ngModel)]="confirmPassword"
-          #userPassword="ngModel"
-        ></ion-input>
-      </ion-item>
-      <ion-buttons>
-        <ion-button type="submit">Sign up</ion-button>
-      </ion-buttons>
-    </form>
-    
-  </ion-card-content>
-</ion-card>
+<ion-content class="ion-padding">
+  <form id="registerForm" name="registerForm" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+    <ion-item>
+      <ion-input label="Name" labelPlacement="stacked" type="text" placeholder="Name..." [(ngModel)]="user.name"
+        #registerName="ngModel" name="registerName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="enter email..." label="Email" labelPlacement="stacked" required name="userEmail"
+        type="email" [(ngModel)]="user.email" #userEmail="ngModel"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="enter password..." label="Password" labelPlacement="stacked" required name="userPassword"
+        type="password" [(ngModel)]="user.password" #userPassword="ngModel"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="confirm password..." label="Confirm Password" labelPlacement="stacked" required
+        name="userPasswordConfirm" type="password" [(ngModel)]="user.confirmPassword" #userPassword="ngModel"></ion-input>
+    </ion-item>
+    <!-- <ion-buttons> -->
+      <ion-button class="submit-btn" type="submit">Sign up</ion-button>
+    <!-- </ion-buttons> -->
+  </form>
+
+
+
+</ion-content>

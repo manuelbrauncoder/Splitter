@@ -20,6 +20,7 @@
         <ion-item>
           <ion-menu-toggle routerLink="about">About</ion-menu-toggle>
         </ion-item>
+        <ion-menu-toggle (click)="usersService.logout()">Logout</ion-menu-toggle>
         
       </ion-list>
     </ion-content>
