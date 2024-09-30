@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Compensation payments:</ion-label>
+    </ion-list-header>
+    @for (payment of payments; track $index) {
+    <ion-item>
+      <div class="item">
+          <span>{{ usersService.getUserFromId(payment.user)?.name }}</span>
+          <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+            @for (settlement of payment.settlements; track $index) {
+              <div class="settlement">
+                <span>{{ usersService.getUserFromId(settlement.payToUser)?.name }}:</span>
+                <span>{{ settlement.value | currency }}</span>
+              </div>
+            }
+          </div>
+    </ion-item>
+    }
+  </ion-list>
+</ion-content>

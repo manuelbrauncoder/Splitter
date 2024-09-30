@@ -10,6 +10,8 @@ import {
   homeOutline,
   trashOutline,
   addOutline,
+  arrowDownCircleOutline,
+  arrowForwardCircleOutline,
 } from 'ionicons/icons';
 import {
   IonApp,
@@ -84,6 +86,8 @@ export class AppComponent implements OnDestroy {
       codeOutline,
       trashOutline,
       addOutline,
+      arrowDownCircleOutline,
+      arrowForwardCircleOutline
     });
     this.unsubUsersList = this.usersService.getUsersList();
     this.unsubGroupsList = this.groupsService.getGroupsList();

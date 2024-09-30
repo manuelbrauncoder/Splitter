@@ -22,8 +22,7 @@ import {
   IonFab,
   IonFabButton,
   IonModal,
-  IonRouterLink
-} from '@ionic/angular/standalone';
+  IonRouterLink, IonAlert } from '@ionic/angular/standalone';
 import { AddExpanseModalComponent } from 'src/app/components/add-expanse-modal/add-expanse-modal.component';
 import { CurrencyPipe, Location } from '@angular/common';
 import { UiServiceService } from 'src/app/services/ui-service.service';
@@ -33,7 +32,7 @@ import { UiServiceService } from 'src/app/services/ui-service.service';
   templateUrl: './group-details.component.html',
   styleUrls: ['./group-details.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonAlert, 
     IonModal,
     IonFabButton,
     IonFab,
@@ -67,12 +66,33 @@ export class GroupDetailsComponent implements OnInit {
   group: Group | null = null;
   groupId = '';
   component = GroupDetailsComponent;
+  isAlertOpen = false;
+
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+      },
+    },
+    {
+      text: 'Delete',
+      role: 'destructive',
+      handler: () => {
+        this.deleteGroup();
+      },
+    },
+  ];
 
   presentingElement: any = null;
   @ViewChild(IonModal) modal!: IonModal;
   name = '';
 
   constructor() {}
+
+  setOpen(isOpen: boolean) {
+    this.isAlertOpen = isOpen;
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {

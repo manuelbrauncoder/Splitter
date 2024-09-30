@@ -13,6 +13,7 @@ import {
   IonLabel, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { Expanse } from 'src/app/interfaces/interfaces';
 import { GroupsService } from 'src/app/services/groups.service';
+import { UiServiceService } from 'src/app/services/ui-service.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -36,6 +37,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class ExpanseDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private location = inject(Location);
+  uiService = inject(UiServiceService);
   groupsService = inject(GroupsService);
   userService = inject(UsersService);
   groupId = '';
@@ -57,5 +59,6 @@ export class ExpanseDetailsComponent implements OnInit {
   async deleteExpanse(groupId: string, expanseIndex: number) {
     this.location.back();
     await this.groupsService.deleteExpanse(groupId, expanseIndex);
+    this.uiService.setOpen(true, 'Expanse deleted');
   }
 }

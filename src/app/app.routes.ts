@@ -34,6 +34,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/register/register.component').then((m) => m.RegisterComponent)
   },
   {
+    path: 'settle',
+    loadComponent: () => import('./pages/settlement/settlement.component').then((m) => m.SettlementComponent)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

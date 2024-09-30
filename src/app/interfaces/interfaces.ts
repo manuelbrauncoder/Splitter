@@ -30,3 +30,13 @@ export interface AuthUser {
     password: string,
     confirmPassword?: string
 }
+
+export interface Settlement {
+    value: number;
+    payToUser: string;
+  }
+
+ export interface Payments {
+    user: string,
+    settlements: Settlement[]
+ }

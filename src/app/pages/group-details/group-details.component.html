@@ -42,15 +42,23 @@
       <ion-icon slot="start" name="stats-chart-outline"></ion-icon>
       <ion-label>Statistics</ion-label>
     </ion-item>
-    <ion-item>
+    <ion-item button [routerLink]="['/settle']">
       <ion-icon slot="start" name="code-outline"></ion-icon>
       <ion-label>Settle</ion-label>
     </ion-item>
-    <ion-item button (click)="deleteGroup()">
+    <ion-item button (click)="setOpen(true)">
       <ion-icon slot="start" name="trash-outline"></ion-icon>
       <ion-label>Delete Group</ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-alert
+  [isOpen]="isAlertOpen"
+  header="Delete group?"
+  subHeader="This cannot be undone."
+  [buttons]="alertButtons"
+  (didDismiss)="setOpen(false)"
+></ion-alert>
 
 </ion-content>
 
