@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollY]="false" class="ion-padding" [fullscreen]="true">
+<ion-content class="ion-padding" [fullscreen]="true">
   <form id="expanseForm" name="expanseForm" #expanseForm="ngForm">
     <ion-item>
       <ion-input
@@ -51,7 +51,7 @@
       
         <ion-select [(ngModel)]="expanse.paidBy" #expansePaidBy="ngModel" required name="users" aria-label="users" interface="popover" [multiple]="false" placeholder="Select Payer">
           @for (user of groupsService.group?.users; track $index) {
-            <ion-select-option value="{{ user }}">{{ user }}</ion-select-option>
+            <ion-select-option value="{{ user }}">{{ userService.getUserFromId(user)?.name }}</ion-select-option>
           }
         </ion-select>
       

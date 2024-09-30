@@ -21,16 +21,18 @@
           <ion-menu-toggle routerLink="about">About</ion-menu-toggle>
         </ion-item>
         <ion-menu-toggle (click)="usersService.logout()">Logout</ion-menu-toggle>
-        
+
       </ion-list>
     </ion-content>
   </ion-menu>
 
 
-  <div class="ion-page" >
-    
+  <div class="ion-page">
+
     <ion-content id="main-content" class="ion-padding">
       <ion-router-outlet></ion-router-outlet>
+      <ion-toast [isOpen]="uiService.showToast" [message]="uiService.toastMessage" [duration]="5000"
+        (didDismiss)="uiService.setOpen(false)"></ion-toast>
     </ion-content>
   </div>
 

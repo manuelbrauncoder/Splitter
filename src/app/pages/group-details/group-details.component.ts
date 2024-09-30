@@ -25,7 +25,8 @@ import {
   IonRouterLink
 } from '@ionic/angular/standalone';
 import { AddExpanseModalComponent } from 'src/app/components/add-expanse-modal/add-expanse-modal.component';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, Location } from '@angular/common';
+import { UiServiceService } from 'src/app/services/ui-service.service';
 
 @Component({
   selector: 'app-group-details',
@@ -60,7 +61,9 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class GroupDetailsComponent implements OnInit {
   groupsService = inject(GroupsService);
+  uiService = inject(UiServiceService);
   private route = inject(ActivatedRoute);
+  private location = inject(Location);
   group: Group | null = null;
   groupId = '';
   component = GroupDetailsComponent;
@@ -85,6 +88,12 @@ export class GroupDetailsComponent implements OnInit {
 
   confirm() {
     this.modal.dismiss(this.name, 'confirm');
+  }
+
+  async deleteGroup(){
+    await this.groupsService.deleteGroup(this.groupsService.group!);
+    this.location.back();
+    this.uiService.setOpen(true, 'Group deleted');
   }
 
   

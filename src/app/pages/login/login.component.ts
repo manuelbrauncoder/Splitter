@@ -61,7 +61,11 @@ export class LoginComponent implements OnInit {
   }
 
   guestLogin(){
-    
+    const user: AuthUser = {
+      email: 'guest@splitter.com',
+      password: '123456'
+    }
+    this.usersService.login(user);
   }
 
   ngOnInit() {}

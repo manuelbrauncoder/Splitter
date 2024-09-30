@@ -9,7 +9,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content [scrollY]="false" class="ion-padding" [fullscreen]="true">
+<ion-content  class="ion-padding" [fullscreen]="true">
   <form id="groupForm" name="groupForm" #groupForm="ngForm">
     <ion-item>
       <ion-input #title="ngModel" required minlength="4" label="Enter Title" labelPlacement="stacked" type="text"
@@ -23,8 +23,8 @@
 
       <ion-select [(ngModel)]="group.users" #groupUsers="ngModel" required name="users" aria-label="users" interface="popover" [multiple]="true"
         placeholder="Select users">
-        @for (user of users; track $index) {
-        <ion-select-option value="{{ user }}">{{ user }}</ion-select-option>
+        @for (user of userService.users; track $index) {
+        <ion-select-option value="{{ user.id }}">{{ user.name }}</ion-select-option>
         }
       </ion-select>
 
@@ -37,6 +37,33 @@
         }
       </ion-select>
     </ion-item>
+
+    <div class="custom-category">
+      <ion-item>
+        <ion-input
+          [(ngModel)]="customCategory"
+          id="newCategory"
+          name="newCategory"
+          #newCategory="ngModel"
+          label="custom Category"
+          labelPlacement="stacked"
+          type="text"
+          placeholder="add Category"
+        ></ion-input>
+      </ion-item>
+      <ion-button (click)="addNewCategoryToSelection()"><ion-icon name="add-outline"></ion-icon></ion-button>
+    </div>
+    <div class="custom-selection">
+      <ion-list>
+        @for (item of customCategories; track $index; let i = $index) {
+          <ion-item>
+            <ion-icon button (click)="deleteItemFromSelection(i)" aria-hidden="true" name="trash-outline" slot="start"></ion-icon>
+            <ion-label>{{ item }}</ion-label>
+          </ion-item>
+        }
+      </ion-list>
+    </div>
+    
   </form>
 
 </ion-content>

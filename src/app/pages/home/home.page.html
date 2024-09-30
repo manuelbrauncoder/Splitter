@@ -30,6 +30,10 @@
       <ion-item button [routerLink]="['/group-details', group.id]">
         <ion-label>{{ group.title }}</ion-label>
       </ion-item>
+    } @empty {
+      <ion-item>
+        <ion-label>Press the Button to add a new Group</ion-label>
+      </ion-item>
     }
   </ion-list>
 

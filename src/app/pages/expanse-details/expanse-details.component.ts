@@ -13,6 +13,7 @@ import {
   IonLabel, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { Expanse } from 'src/app/interfaces/interfaces';
 import { GroupsService } from 'src/app/services/groups.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-expanse-details',
@@ -36,6 +37,7 @@ export class ExpanseDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private location = inject(Location);
   groupsService = inject(GroupsService);
+  userService = inject(UsersService);
   groupId = '';
   expanseIndex = 0;
 

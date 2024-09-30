@@ -10,17 +10,17 @@ import {
   IonButton,
   IonTitle,
   IonSelect,
-  IonSelectOption,
-} from '@ionic/angular/standalone';
+  IonSelectOption, IonIcon, IonList, IonLabel } from '@ionic/angular/standalone';
 import { Group } from 'src/app/interfaces/interfaces';
 import { GroupsService } from 'src/app/services/groups.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-add-group-modal',
   templateUrl: './add-group-modal.component.html',
   styleUrls: ['./add-group-modal.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonLabel, IonList, IonIcon, 
     IonTitle,
     IonButton,
     IonContent,
@@ -36,6 +36,7 @@ import { GroupsService } from 'src/app/services/groups.service';
 })
 export class AddGroupModalComponent {
   groupService = inject(GroupsService);
+  userService = inject(UsersService);
 
   group: Group = {
     id: '',
@@ -46,24 +47,42 @@ export class AddGroupModalComponent {
     categories: [],
   };
 
-  users = ['Manuel', 'Milena', 'Hans', 'Miley'];
-  categories = ['Lebensmittel', 'Hund', 'Luxus'];
+  customCategory = '';
+
+  categories = ['Lebensmittel', 'Unterkunft', 'Unterhaltung', 'Gesundheit', 'Freizeitaktivitäten'];
+  customCategories: string[] = [];
 
   @Output() triggerClose = new EventEmitter<boolean>();
   @Output() triggerConfirm = new EventEmitter<boolean>();
 
   constructor() {}
 
+  addNewCategoryToSelection() {    
+    if (this.customCategory.length > 3) {
+      this.customCategories.push(this.customCategory);
+      this.customCategory = '';
+    }
+  }
+
+  deleteItemFromSelection(index: number){
+    this.customCategories.splice(index, 1);
+  }
+
   triggerCloseInParent() {
     this.triggerClose.emit();
   }
 
   async triggerConfirmInParent(ngForm: NgForm) {
-    if (ngForm.valid && ngForm.submitted) {
+    if (ngForm.valid && ngForm.submitted && !this.doesNameAlreadyExist()) {
+      this.group.categories = [...this.group.categories, ...this.customCategories];
       this.group.id = this.groupService.getUuidv4();
       await this.groupService.saveGroup(this.group);
       console.log(this.group);
       this.triggerConfirm.emit();
     }
+  }
+
+  doesNameAlreadyExist(){
+    return this.groupService.groups.some(group => group.title.trim().toLowerCase() === this.group.title.trim().toLowerCase());
   }
 }

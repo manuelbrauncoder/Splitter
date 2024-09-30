@@ -1,7 +1,16 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { add, airplane, cashOutline, codeOutline, statsChartOutline, homeOutline, trashOutline } from 'ionicons/icons';
+import {
+  add,
+  airplane,
+  cashOutline,
+  codeOutline,
+  statsChartOutline,
+  homeOutline,
+  trashOutline,
+  addOutline,
+} from 'ionicons/icons';
 import {
   IonApp,
   IonMenuToggle,
@@ -18,17 +27,22 @@ import {
   IonRouterLink,
   IonList,
   IonItem,
-  IonButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
+  IonButton,
+  IonIcon,
+  IonLabel, IonToast } from '@ionic/angular/standalone';
 import { GroupsService } from './services/groups.service';
 import { UsersService } from './services/users.service';
 import { Auth, User, user } from '@angular/fire/auth';
 import { Subscription } from 'rxjs';
+import { UiServiceService } from './services/ui-service.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [IonLabel, IonIcon, 
+  imports: [IonToast, 
+    IonLabel,
+    IonIcon,
     IonMenuToggle,
     IonButton,
     IonItem,
@@ -51,6 +65,7 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnDestroy {
   groupsService = inject(GroupsService);
   usersService = inject(UsersService);
+  uiService = inject(UiServiceService);
 
   private auth: Auth = inject(Auth);
   user$ = user(this.auth);
@@ -60,7 +75,16 @@ export class AppComponent implements OnDestroy {
   unsubUsersList;
 
   constructor() {
-    addIcons({homeOutline,add,airplane,cashOutline,statsChartOutline,codeOutline, trashOutline});
+    addIcons({
+      homeOutline,
+      add,
+      airplane,
+      cashOutline,
+      statsChartOutline,
+      codeOutline,
+      trashOutline,
+      addOutline,
+    });
     this.unsubUsersList = this.usersService.getUsersList();
     this.unsubGroupsList = this.groupsService.getGroupsList();
     this.userSubscription = this.user$.subscribe((authUser: User | null) => {
@@ -69,8 +93,7 @@ export class AppComponent implements OnDestroy {
       } else {
         console.log('User:', authUser);
       }
-      
-    })
+    });
   }
 
   ngOnDestroy(): void {

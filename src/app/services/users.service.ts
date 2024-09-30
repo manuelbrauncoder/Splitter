@@ -59,6 +59,7 @@ export class UsersService {
       })
   }
 
+  
   logout(){
     const auth = getAuth();
     signOut(auth)
@@ -112,5 +113,9 @@ export class UsersService {
       groups: user.groups || [],
       amount: user.amount || [],
     };
+  }
+
+  getUserFromId(id: string){
+    return this.users.find(user => user.id === id);
   }
 }

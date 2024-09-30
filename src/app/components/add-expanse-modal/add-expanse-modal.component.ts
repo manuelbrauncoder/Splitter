@@ -21,6 +21,7 @@ import {
 } from '@ionic/angular/standalone';
 import { FormsModule, NgForm } from '@angular/forms';
 import { GroupsService } from 'src/app/services/groups.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-add-expanse-modal',
@@ -43,6 +44,7 @@ import { GroupsService } from 'src/app/services/groups.service';
 })
 export class AddExpanseModalComponent implements OnInit {
   groupsService = inject(GroupsService);
+  userService = inject(UsersService);
 
   @Output() triggerClose = new EventEmitter<boolean>();
   @Output() triggerConfirm = new EventEmitter<boolean>();

@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {
   collection,
+  deleteDoc,
   doc,
   Firestore,
   getDoc,
@@ -76,6 +77,11 @@ export class GroupsService {
     await setDoc(groupRef, group).catch((err) => {
       console.log('Error saving Group', err);
     });
+  }
+
+  async deleteGroup(group: Group) {
+    const docRef = doc(this.firestore, 'groups', group.id);
+    await deleteDoc(docRef);
   }
 
   setGroupObject(group: any): Group {

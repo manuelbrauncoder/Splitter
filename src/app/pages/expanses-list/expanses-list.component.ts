@@ -18,6 +18,7 @@ import {
   IonRouterLink
 } from '@ionic/angular/standalone';
 import { GroupsService } from 'src/app/services/groups.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-expanses-list',
@@ -45,6 +46,7 @@ import { GroupsService } from 'src/app/services/groups.service';
 })
 export class ExpansesListComponent implements OnInit {
   groupsService = inject(GroupsService);
+  userService = inject(UsersService);
   private route = inject(ActivatedRoute);
   groupId = '';
 
