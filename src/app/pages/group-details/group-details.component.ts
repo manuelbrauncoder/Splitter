@@ -23,18 +23,24 @@ import {
   IonFab,
   IonFabButton,
   IonModal,
-  IonRouterLink, IonAlert } from '@ionic/angular/standalone';
+  IonRouterLink,
+  IonAlert,
+  IonSelect,
+  IonSelectOption,
+} from '@ionic/angular/standalone';
 import { AddExpanseModalComponent } from 'src/app/components/add-expanse-modal/add-expanse-modal.component';
 import { CurrencyPipe, Location } from '@angular/common';
 import { UiServiceService } from 'src/app/services/ui-service.service';
-import { AddUserToGroupModalComponent } from 'src/app/components/add-user-to-group-modal/add-user-to-group-modal.component';
+import { UsersService } from 'src/app/services/users.service';
+import { FilterUsersPipe } from 'src/app/pipes/filter-users.pipe';
 
 @Component({
   selector: 'app-group-details',
   templateUrl: './group-details.component.html',
   styleUrls: ['./group-details.component.scss'],
   standalone: true,
-  imports: [IonAlert,
+  imports: [
+    IonAlert,
     IonModal,
     IonFabButton,
     IonFab,
@@ -57,24 +63,28 @@ import { AddUserToGroupModalComponent } from 'src/app/components/add-user-to-gro
     AddExpanseModalComponent,
     CurrencyPipe,
     IonRouterLink,
-    RouterModule, AddUserToGroupModalComponent],
+    RouterModule,
+    IonSelect,
+    IonSelectOption,
+    FilterUsersPipe
+  ],
 })
 export class GroupDetailsComponent implements OnInit {
   groupsService = inject(GroupsService);
+  usersService = inject(UsersService);
   uiService = inject(UiServiceService);
   private route = inject(ActivatedRoute);
   private location = inject(Location);
   group: Group | null = null;
   groupId = '';
   component = GroupDetailsComponent;
-  isAlertOpen = false;  
+  isAlertOpen = false;
 
   public alertButtons = [
     {
       text: 'Cancel',
       role: 'cancel',
-      handler: () => {
-      },
+      handler: () => {},
     },
     {
       text: 'Delete',
@@ -87,10 +97,20 @@ export class GroupDetailsComponent implements OnInit {
 
   presentingElement: any = null;
   @ViewChild('expanseModal') expanseModal!: IonModal;
-  @ViewChild('addUserModal') addUserModal!: IonModal;
   name = '';
 
   constructor() {}
+
+  addUser(event: CustomEvent){
+    console.log(event.detail.value);
+    const newUsers = event.detail.value;
+    let group = this.groupsService.group;
+    if (group?.users) {
+      group.users = [...group.users, ...newUsers];
+      this.groupsService.saveGroup(group);
+    }
+    
+  }
 
   setOpen(isOpen: boolean) {
     this.isAlertOpen = isOpen;
@@ -112,11 +132,7 @@ export class GroupDetailsComponent implements OnInit {
     this.expanseModal.dismiss(this.name, 'confirm');
   }
 
-  closeAddUserModal(){
-    this.addUserModal.dismiss(null, 'cancel');
-  }
-
-  async deleteGroup(){
+  async deleteGroup() {
     await this.groupsService.deleteGroup(this.groupsService.group!);
     this.location.back();
     this.uiService.setOpen(true, 'Group deleted');
@@ -127,6 +143,4 @@ export class GroupDetailsComponent implements OnInit {
     if (ev.detail.role === 'confirm') {
     }
   }
-
-  
 }

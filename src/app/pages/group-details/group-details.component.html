@@ -45,24 +45,25 @@
       <ion-icon slot="start" name="code-outline"></ion-icon>
       <ion-label>Settle</ion-label>
     </ion-item>
+    
     <ion-item>
       <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-      <ion-label id="open-add-user-to-group-modal" expand="block">Add User</ion-label>
+      <ion-label>Add User</ion-label>
+      <ion-select (ionChange)="addUser($event)" [multiple]="true">
+        @for (user of usersService.users | filterUsers: groupsService.group! ; track $index) {
+          <ion-select-option value="{{ user.id}}">{{ user.name }}</ion-select-option>
+        }
+      </ion-select>
     </ion-item>
     <ion-item (click)="setOpen(true)">
       <ion-icon slot="start" name="trash-outline"></ion-icon>
       <ion-label>Delete Group</ion-label>
     </ion-item>
+    
   </ion-list>
 
   <ion-alert [isOpen]="isAlertOpen" header="Delete group?" subHeader="This cannot be undone." [buttons]="alertButtons"
     (didDismiss)="setOpen(false)"></ion-alert>
 
-  <ion-modal #addUserModal trigger="open-add-user-to-group-modal" (willDismiss)="onWillDismiss($event)"
-    [presentingElement]="presentingElement">
-    <ng-template>
-      <app-add-user-to-group-modal  (triggerClose)="closeAddUserModal()"></app-add-user-to-group-modal>
-    </ng-template>
-  </ion-modal>
 
 </ion-content>
