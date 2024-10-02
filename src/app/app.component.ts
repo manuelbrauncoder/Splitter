@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   add,
@@ -70,7 +70,7 @@ export class AppComponent implements OnDestroy {
   groupsService = inject(GroupsService);
   usersService = inject(UsersService);
   uiService = inject(UiServiceService);
-
+  private router = inject(Router);
   private auth: Auth = inject(Auth);
   user$ = user(this.auth);
   userSubscription?: Subscription;
@@ -100,6 +100,8 @@ export class AppComponent implements OnDestroy {
       if (authUser === null) {
         console.log('no user logged in');
         this.currentUser = 'unknown'
+        this.router.navigate(['login']);
+
       } else {
         console.log('User:', authUser);
         this.currentUser = authUser.email || 'unknown';

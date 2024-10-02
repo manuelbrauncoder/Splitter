@@ -7,14 +7,15 @@
 
 <ion-content class="ion-padding">
   <div class="flex-box">
-    <form id="loginForm" name="loginForm" #loginForm="ngForm" (ngSubmit)="login()"> 
+    <form class="sign-up-in-form" id="loginForm" name="loginForm" #loginForm="ngForm" (ngSubmit)="login()"> 
       
       <ion-item>
         <ion-input
           placeholder="enter email..."
           label="Email"
-          labelPlacement="stacked"
+          labelPlacement="floating"
           required
+          pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
           name="email"
           type="email"
           [(ngModel)]="user.email"
@@ -23,18 +24,22 @@
       </ion-item>
       <ion-item>
         <ion-input
-          placeholder="enter password..."
           label="Password"
-          labelPlacement="stacked"
+          labelPlacement="floating"
           required
+          minlength="6"
           name="password"
           type="password"
           [(ngModel)]="user.password"
           #userPassword="ngModel"
-        ></ion-input>
+        ><ion-input-password-toggle slot="end"></ion-input-password-toggle></ion-input>
+        
       </ion-item>
+      @if (usersService.errmsg !== '') {
+        <ion-text class="ml-1 mt-0-5" color="danger">{{ usersService.errmsg }}</ion-text>
+      }
       <ion-buttons class="btns">
-        <ion-button type="submit">Login</ion-button>
+        <ion-button [disabled]="!loginForm.valid" type="submit">Login</ion-button>
         <ion-button (click)="guestLogin()">Guest Login</ion-button>
       </ion-buttons>
     </form>

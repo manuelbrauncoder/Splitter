@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonRouterLink,
@@ -17,7 +17,7 @@ import {
   IonButtons,
   IonButton,
   IonContent,
-} from '@ionic/angular/standalone';
+  IonInputPasswordToggle, IonText } from '@ionic/angular/standalone';
 import { AuthUser } from 'src/app/interfaces/interfaces';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -26,7 +26,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonText, 
     IonContent,
     IonButton,
     IonButtons,
@@ -43,11 +43,13 @@ import { UsersService } from 'src/app/services/users.service';
     FormsModule,
     CommonModule,
     IonRouterLink,
-    RouterLink
+    RouterLink,
+    IonInputPasswordToggle
   ],
 })
 export class LoginComponent implements OnInit {
-  private usersService = inject(UsersService);
+  usersService = inject(UsersService);
+  private router = inject(Router);
   
   user: AuthUser = {
     email: '',
@@ -58,6 +60,14 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.usersService.login(this.user);
+    this.clearInput();
+  }
+
+  clearInput(){
+    this.user = {
+      email: '',
+      password: ''
+    }
   }
 
   guestLogin(){
@@ -66,6 +76,7 @@ export class LoginComponent implements OnInit {
       password: '123456'
     }
     this.usersService.login(user);
+    this.clearInput();
   }
 
   ngOnInit() {}
