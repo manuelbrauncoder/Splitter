@@ -2,6 +2,7 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Group } from 'src/app/interfaces/interfaces';
 import { GroupsService } from 'src/app/services/groups.service';
+import { OverlayEventDetail } from '@ionic/core/components';
 import {
   IonHeader,
   IonToolbar,
@@ -26,13 +27,14 @@ import {
 import { AddExpanseModalComponent } from 'src/app/components/add-expanse-modal/add-expanse-modal.component';
 import { CurrencyPipe, Location } from '@angular/common';
 import { UiServiceService } from 'src/app/services/ui-service.service';
+import { AddUserToGroupModalComponent } from 'src/app/components/add-user-to-group-modal/add-user-to-group-modal.component';
 
 @Component({
   selector: 'app-group-details',
   templateUrl: './group-details.component.html',
   styleUrls: ['./group-details.component.scss'],
   standalone: true,
-  imports: [IonAlert, 
+  imports: [IonAlert,
     IonModal,
     IonFabButton,
     IonFab,
@@ -55,8 +57,7 @@ import { UiServiceService } from 'src/app/services/ui-service.service';
     AddExpanseModalComponent,
     CurrencyPipe,
     IonRouterLink,
-    RouterModule
-  ],
+    RouterModule, AddUserToGroupModalComponent],
 })
 export class GroupDetailsComponent implements OnInit {
   groupsService = inject(GroupsService);
@@ -66,7 +67,7 @@ export class GroupDetailsComponent implements OnInit {
   group: Group | null = null;
   groupId = '';
   component = GroupDetailsComponent;
-  isAlertOpen = false;
+  isAlertOpen = false;  
 
   public alertButtons = [
     {
@@ -85,7 +86,8 @@ export class GroupDetailsComponent implements OnInit {
   ];
 
   presentingElement: any = null;
-  @ViewChild(IonModal) modal!: IonModal;
+  @ViewChild('expanseModal') expanseModal!: IonModal;
+  @ViewChild('addUserModal') addUserModal!: IonModal;
   name = '';
 
   constructor() {}
@@ -103,17 +105,27 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   cancel() {
-    this.modal.dismiss(null, 'cancel');
+    this.expanseModal.dismiss(null, 'cancel');
   }
 
   confirm() {
-    this.modal.dismiss(this.name, 'confirm');
+    this.expanseModal.dismiss(this.name, 'confirm');
+  }
+
+  closeAddUserModal(){
+    this.addUserModal.dismiss(null, 'cancel');
   }
 
   async deleteGroup(){
     await this.groupsService.deleteGroup(this.groupsService.group!);
     this.location.back();
     this.uiService.setOpen(true, 'Group deleted');
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+    }
   }
 
   
