@@ -13,6 +13,7 @@ import {
   arrowDownCircleOutline,
   arrowForwardCircleOutline,
   personCircleOutline,
+  personAddOutline,
 } from 'ionicons/icons';
 import {
   IonApp,
@@ -35,8 +36,6 @@ import {
   IonLabel, IonToast } from '@ionic/angular/standalone';
 import { GroupsService } from './services/groups.service';
 import { UsersService } from './services/users.service';
-import { Auth, User, user } from '@angular/fire/auth';
-import { Subscription } from 'rxjs';
 import { UiServiceService } from './services/ui-service.service';
 
 @Component({
@@ -66,19 +65,36 @@ import { UiServiceService } from './services/ui-service.service';
     IonMenuButton,
   ],
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnDestroy, OnInit {
   groupsService = inject(GroupsService);
   usersService = inject(UsersService);
   uiService = inject(UiServiceService);
-  private router = inject(Router);
-  private auth: Auth = inject(Auth);
-  user$ = user(this.auth);
-  userSubscription?: Subscription;
-  currentUser = '';
-
-
+  router = inject(Router);
+  
   unsubGroupsList;
   unsubUsersList;
+
+  ngOnInit(): void {
+    this.usersService.user$.subscribe(user => {
+      if (user) {
+        this.usersService.currentUserSig.set({
+          email: user.email!,
+          name: user.displayName!
+        });
+      } else {
+        this.usersService.currentUserSig.set(null);
+        this.redirectToLogin();
+      }
+      console.log(this.usersService.currentUserSig());
+      
+    })
+  }
+
+  redirectToLogin(){
+    if (this.router.url !== '/login' || '/register') {
+      this.router.navigate(['/login']);
+    }
+  }
 
   constructor() {
     addIcons({
@@ -92,28 +108,15 @@ export class AppComponent implements OnDestroy {
       addOutline,
       arrowDownCircleOutline,
       arrowForwardCircleOutline,
-      personCircleOutline
+      personCircleOutline,
+      personAddOutline
     });
     this.unsubUsersList = this.usersService.getUsersList();
     this.unsubGroupsList = this.groupsService.getGroupsList();
-    this.userSubscription = this.user$.subscribe((authUser: User | null) => {
-      if (authUser === null) {
-        console.log('no user logged in');
-        this.currentUser = 'unknown'
-        this.router.navigate(['login']);
-
-      } else {
-        console.log('User:', authUser);
-        this.currentUser = authUser.email || 'unknown';
-      }
-    });
   }
-
-  
 
   ngOnDestroy(): void {
     this.unsubGroupsList();
     this.unsubUsersList();
-    this.userSubscription?.unsubscribe();
   }
 }

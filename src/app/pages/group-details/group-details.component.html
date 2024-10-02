@@ -47,9 +47,8 @@
     </ion-item>
     
     <ion-item>
-      <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-      <ion-label>Add User</ion-label>
-      <ion-select (ionChange)="addUser($event)" [multiple]="true">
+      <ion-icon slot="start" name="person-add-outline"></ion-icon>
+      <ion-select justify="space-between" label="Add User" (ionChange)="addUser($event)" [multiple]="true">
         @for (user of usersService.users | filterUsers: groupsService.group! ; track $index) {
           <ion-select-option value="{{ user.id}}">{{ user.name }}</ion-select-option>
         }

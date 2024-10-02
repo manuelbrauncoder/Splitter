@@ -22,7 +22,11 @@
     </ng-template>
   </ion-modal>
 
-  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="center-text">Hallo {{ usersService.getCurrentUserData()?.name }}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
 
 
   <ion-list [inset]="true">

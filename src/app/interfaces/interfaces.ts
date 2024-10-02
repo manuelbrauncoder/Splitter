@@ -27,7 +27,8 @@ export interface User {
 export interface AuthUser {
     name?: string,
     email: string,
-    password: string,
+    password?: string,
+    id?: string
 }
 
 export interface Settlement {

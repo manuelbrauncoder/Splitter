@@ -19,19 +19,19 @@ import {
   IonList,
   IonMenuButton,
   IonMenu,
-  IonRouterLink
-} from '@ionic/angular/standalone';
+  IonRouterLink, IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { Group } from 'src/app/interfaces/interfaces';
 import { AddGroupModalComponent } from 'src/app/components/add-group-modal/add-group-modal.component';
 import { GroupsService } from 'src/app/services/groups.service';
 import { RouterModule } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonCardTitle, IonCardHeader, IonCard, 
     IonList,
     IonLabel,
     CommonModule,
@@ -59,6 +59,7 @@ export class HomePage implements OnInit {
   name = '';
   @ViewChild(IonModal) modal!: IonModal;
   public groupsService = inject(GroupsService);
+  public usersService = inject(UsersService);
 
   presentingElement: any = null;
 

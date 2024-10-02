@@ -1,17 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton, IonContent } from "@ionic/angular/standalone";
+import { Component, inject, OnInit } from '@angular/core';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonMenuButton,
+  IonContent, IonList, IonItem, IonLabel } from '@ionic/angular/standalone';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [IonContent, IonButtons, IonTitle, IonToolbar, IonHeader, IonMenuButton]
+  imports: [IonLabel, IonItem, IonList, 
+    IonContent,
+    IonButtons,
+    IonTitle,
+    IonToolbar,
+    IonHeader,
+    IonMenuButton,
+  ],
 })
-export class ProfileComponent  implements OnInit {
-
-  constructor() { }
+export class ProfileComponent implements OnInit {
+  usersService = inject(UsersService);
+  constructor() {}
 
   ngOnInit() {}
-
 }

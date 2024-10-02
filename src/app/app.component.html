@@ -23,7 +23,7 @@
           </ion-item>
         </ion-list>
         <div class="profile">
-          <span>{{currentUser}}</span>
+          <span>{{usersService.getCurrentUserData()?.email}}</span>
           <ion-menu-toggle (click)="usersService.logout()">Logout</ion-menu-toggle>
         </div>
       </div>

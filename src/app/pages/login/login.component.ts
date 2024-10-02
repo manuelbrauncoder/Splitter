@@ -59,8 +59,15 @@ export class LoginComponent implements OnInit {
   constructor() {}
 
   login(){
-    this.usersService.login(this.user);
-    this.clearInput();
+    this.usersService.login(this.user)
+      .subscribe({
+        next: () => {
+          this.clearInput();
+        },
+        error: (err) => {
+          this.usersService.handleLoginError(err.code);
+        }
+      })
   }
 
   clearInput(){

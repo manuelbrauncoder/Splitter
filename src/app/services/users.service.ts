@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import {
   collection,
   doc,
@@ -11,42 +11,49 @@ import {
 import { AuthUser, User } from '../interfaces/interfaces';
 import {
   Auth,
-  AuthErrorCodes,
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
+  user,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
+  private auth = inject(Auth);
   private firestore = inject(Firestore);
-  private collRef = collection(this.firestore, 'users');
   private router = inject(Router);
+
+  private collRef = collection(this.firestore, 'users');
   public users: User[] = [];
-  public user: User | null = null;
+
   errmsg = '';
 
-  auth = inject(Auth);
+  user$ = user(this.auth)
+  currentUserSig = signal<AuthUser | null | undefined>(undefined)
 
   constructor() {}
 
-  register(user: AuthUser) {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, user.email, user.password)
-      .then((userCredeantial) => {
-        const newUser = this.createUser(user, userCredeantial.user.uid);
-        this.saveUser(newUser);
+
+  register(user: AuthUser): Observable<void>{
+    const promise = createUserWithEmailAndPassword(this.auth, user.email, user.password!).then((response) => {
+      updateProfile(response.user, {displayName: user.name});
+      const newUser = this.createUser(user, response.user.uid);
+      this.saveUser(newUser);
+      this.currentUserSig.set({
+        email: response.user.email!,
+        name: user.name,
+        id: response.user.uid
       })
-      .then(() => {
-        this.router.navigate(['home']);
-      })
-      .catch((err) => {
-        this.handleSignUpError(err.code);
-      });
+    })
+    .catch((err) => {
+      this.handleSignUpError(err.code);
+    });
+    return from(promise);
   }
 
   handleSignUpError(err: string) {
@@ -72,15 +79,13 @@ export class UsersService {
     }
   }
 
-  login(user: AuthUser) {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, user.email, user.password)
-      .then((userCreadential) => {
-        this.router.navigate(['home']);
+
+  login(user: AuthUser): Observable<void> {
+    const promise = signInWithEmailAndPassword(this.auth, user.email, user.password!)
+      .then(() => {
+        this.router.navigate(['/home']);
       })
-      .catch((err) => {
-        this.handleLoginError(err.code);
-      });
+    return from(promise);
   }
 
   handleLoginError(err: string) {
@@ -100,11 +105,9 @@ export class UsersService {
   }
 
   logout() {
-    const auth = getAuth();
-    signOut(auth)
+    signOut(this.auth)
       .then(() => {
         this.router.navigate(['login']);
-        // add things to do after logout
       })
       .catch((err) => {
         console.log('errorCode:', err.code);
@@ -155,5 +158,15 @@ export class UsersService {
 
   getUserFromId(id: string) {
     return this.users.find((user) => user.id === id);
+  }
+
+  getCurrentUserData(){
+    let currentUser: User | null = null;
+    if (this.auth.currentUser) {
+      const uid = this.auth.currentUser.uid;
+      const user = this.users.find(u => u.id === uid);
+      currentUser = user!;
+    }
+    return currentUser;
   }
 }

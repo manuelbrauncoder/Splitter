@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   IonCardContent,
   IonItem,
@@ -50,6 +51,7 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class RegisterComponent implements OnInit {
   usersService = inject(UsersService);
+  router = inject(Router);
 
   constructor() {}
 
@@ -62,10 +64,14 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(ngForm: NgForm) {
-
     if (ngForm.valid && ngForm.submitted) {
-      this.usersService.register(this.user);
-      this.clearInput();
+      this.usersService.register(this.user)
+        .subscribe({
+          next: () => {
+            this.clearInput();
+            this.router.navigate(['home']);
+          }
+        })
     }
   }
 
