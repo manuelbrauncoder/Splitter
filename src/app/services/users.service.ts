@@ -10,6 +10,7 @@ import {
 } from '@angular/fire/firestore';
 import { AuthUser, User } from '../interfaces/interfaces';
 import {
+  Auth,
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
@@ -28,7 +29,10 @@ export class UsersService {
   public users: User[] = [];
   public user: User | null = null;
 
+  auth = inject(Auth);
+
   constructor() {}
+
 
   register(user: AuthUser) {
     const auth = getAuth();
@@ -46,7 +50,7 @@ export class UsersService {
       });
   }
 
-  login(user: AuthUser){
+  login(user: AuthUser) {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, user.email, user.password)
       .then((userCreadential) => {
@@ -56,11 +60,10 @@ export class UsersService {
       .catch((err) => {
         console.log('errorCode:', err.code);
         console.log('errorMessage:', err.message);
-      })
+      });
   }
 
-  
-  logout(){
+  logout() {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
@@ -70,8 +73,7 @@ export class UsersService {
       .catch((err) => {
         console.log('errorCode:', err.code);
         console.log('errorMessage:', err.message);
-        
-      })
+      });
   }
 
   createUser(user: AuthUser, uid: string): User {
@@ -115,7 +117,7 @@ export class UsersService {
     };
   }
 
-  getUserFromId(id: string){
-    return this.users.find(user => user.id === id);
+  getUserFromId(id: string) {
+    return this.users.find((user) => user.id === id);
   }
 }

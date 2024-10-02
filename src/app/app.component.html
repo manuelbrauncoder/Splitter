@@ -2,7 +2,7 @@
 
   <ion-menu contentId="main-content">
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="primary">
         <ion-buttons>
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
@@ -10,19 +10,24 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-list>
-        <ion-item>
-          <ion-menu-toggle routerLink="home">Home</ion-menu-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-menu-toggle routerLink="profile">Profile</ion-menu-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-menu-toggle routerLink="about">About</ion-menu-toggle>
-        </ion-item>
-        <ion-menu-toggle (click)="usersService.logout()">Logout</ion-menu-toggle>
+      <div class="flex-box">
+        <ion-list>
+          <ion-item>
+            <ion-menu-toggle routerLink="home">Home</ion-menu-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-menu-toggle routerLink="profile">Profile</ion-menu-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-menu-toggle routerLink="about">About</ion-menu-toggle>
+          </ion-item>
+        </ion-list>
+        <div class="profile">
+          <span>{{currentUser}}</span>
+          <ion-menu-toggle (click)="usersService.logout()">Logout</ion-menu-toggle>
+        </div>
+      </div>
 
-      </ion-list>
     </ion-content>
   </ion-menu>
 

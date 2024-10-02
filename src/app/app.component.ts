@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
@@ -12,6 +12,7 @@ import {
   addOutline,
   arrowDownCircleOutline,
   arrowForwardCircleOutline,
+  personCircleOutline,
 } from 'ionicons/icons';
 import {
   IonApp,
@@ -42,6 +43,7 @@ import { UiServiceService } from './services/ui-service.service';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
+  styleUrls: ['app.component.scss'],
   imports: [IonToast, 
     IonLabel,
     IonIcon,
@@ -72,6 +74,8 @@ export class AppComponent implements OnDestroy {
   private auth: Auth = inject(Auth);
   user$ = user(this.auth);
   userSubscription?: Subscription;
+  currentUser = '';
+
 
   unsubGroupsList;
   unsubUsersList;
@@ -87,18 +91,23 @@ export class AppComponent implements OnDestroy {
       trashOutline,
       addOutline,
       arrowDownCircleOutline,
-      arrowForwardCircleOutline
+      arrowForwardCircleOutline,
+      personCircleOutline
     });
     this.unsubUsersList = this.usersService.getUsersList();
     this.unsubGroupsList = this.groupsService.getGroupsList();
     this.userSubscription = this.user$.subscribe((authUser: User | null) => {
       if (authUser === null) {
         console.log('no user logged in');
+        this.currentUser = 'unknown'
       } else {
         console.log('User:', authUser);
+        this.currentUser = authUser.email || 'unknown';
       }
     });
   }
+
+  
 
   ngOnDestroy(): void {
     this.unsubGroupsList();

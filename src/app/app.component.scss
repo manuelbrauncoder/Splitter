@@ -1,0 +1,15 @@
+.flex-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.profile{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    span{
+        color: white;
+    }
+}
